@@ -45,7 +45,13 @@ public class PlayerController : MonoBehaviour {
 
 		if (other.gameObject.CompareTag("Harmful"))
 		{
-			gameObject.transform.position = new Vector3(0,0,0);
+			gameObject.transform.position = new Vector3(0, 0, 0);
+			rb.velocity = Vector3.zero;
+		}
+
+		if (other.gameObject.CompareTag("Fallaway"))
+		{
+			StartCoroutine(Fallaway(other));
 		}
 	}
 
@@ -55,4 +61,14 @@ public class PlayerController : MonoBehaviour {
         movementX = v.x;
         movementY = v.y;
     }
+
+	IEnumerator Fallaway(Collider other)
+	{
+		yield return new WaitForSeconds(.5f);
+		other.gameObject.transform.position = new Vector3(other.gameObject.transform.position.x, -1, other.gameObject.transform.position.z);
+		yield return new WaitForSeconds(1f);
+		other.gameObject.transform.position = new Vector3(other.gameObject.transform.position.x, -.4f, other.gameObject.transform.position.z);
+
+		StopCoroutine(Fallaway(other));
+	}
 }

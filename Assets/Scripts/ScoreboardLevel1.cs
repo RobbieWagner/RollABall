@@ -13,6 +13,7 @@ public class ScoreboardLevel1 : MonoBehaviour
     public int score;
     public bool gameContinues; //boolean that determines if the game continues after collecting 10 coins
     private int oldScore; 
+    public GameObject player;
     
     public GameObject barrierWalls;
 
@@ -40,11 +41,11 @@ public class ScoreboardLevel1 : MonoBehaviour
 	{
 		scoreText.text = "Count: " + score.ToString();
 
-		if(score == 10 && gameContinues) 
+		if(score == 14 && gameContinues) 
 		{
             StartCoroutine(OpenTheMap());
 		}
-        else if (score == 10)
+        else if (score == 14)
         {
             winTextObject.SetActive(true);
         }
@@ -61,6 +62,7 @@ public class ScoreboardLevel1 : MonoBehaviour
         winTextObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         winText.text = "YOU WIN?";
+        player.transform.position = new Vector3(0, 0.5f, 0);
         newRoom.SetActive(true);
         oldRoom.SetActive(false);
 
